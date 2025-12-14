@@ -1590,6 +1590,7 @@
                             <th style="padding:10px;border:1px solid #000;font-size:12px;">الاشتراكات</th>
                             <th style="padding:10px;border:1px solid #000;font-size:12px;">المسددة</th>
                             <th style="padding:10px;border:1px solid #000;font-size:12px;">بعد 15؟</th>
+                            <th style="padding:10px;border:1px solid #000;font-size:12px;background:#e0f2fe;">الرصيد المتراكم</th>
                             <th style="padding:10px;border:1px solid #000;font-size:12px;">الفائدة (%)</th>
                             <th style="padding:10px;border:1px solid #000;font-size:12px;">مبلغ الفائدة</th>
                         </tr>
@@ -1605,6 +1606,7 @@
                             <th>الاشتراكات</th>
                             <th>الاشتراكات المسددة</th>
                             <th>السداد بعد 15؟</th>
+                            <th>الرصيد المتراكم</th>
                             <th>الفائدة (%)</th>
                             <th>مبلغ الفائدة</th>
                         </tr>
@@ -2356,6 +2358,7 @@
       <td><input type="number" step="0.01" class="sub" value="${row.sub || ''}" /></td>
       <td><input type="number" step="0.01" class="payment" value="${row.payment || ''}" /></td>
       <td style="text-align: center;"><input type="checkbox" class="after16" ${row.after16 ? 'checked' : ''} /></td>
+      <td><input type="number" step="0.01" class="accumulated" readonly value="0.00" style="background-color: #e0f2fe; font-weight: bold; color: #0369a1;" /></td>
       <td><input type="number" step="0.01" class="rate" value="${row.rate || ''}" readonly /></td>
       <td><input type="number" step="0.01" class="amount" readonly value="${row.amount || ''}" /></td>
     `;
@@ -2454,6 +2457,9 @@
                         creditBalance += remainingPayment;
                     }
                 }
+                
+                // عرض الرصيد المتراكم قبل حساب الفائدة
+                tr.querySelector(".accumulated").value = accumulatedSubs.toFixed(2);
                 
                 // حساب الفائدة على الرصيد المتراكم بعد الخصم
                 let interestForThisMonth = 0;
